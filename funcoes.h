@@ -14,7 +14,15 @@ void gerenciar_produtos(Produto **lista);
 void modo_compra(Cliente **c, Produto **p);
 void liberar_memoria(Cliente *c, Produto *p);
 
+
+//Funcao de Produto
+
+void cadastrar_produto(Produto **lista);
+void listar_produtos(Produto *lista);
+void buscar_produto(Produto *lista);
+
 #endif
+
 
 
 

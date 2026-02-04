@@ -74,7 +74,7 @@ void cadastrar_cliente(Cliente **lista) {
     Cliente *aux = *lista;
     while(aux != NULL) {
         if(strcmp(aux->cpf, novo->cpf) == 0) {
-            printf("Erro: CPF ja cadastrado!n");
+            printf("Erro: CPF ja cadastrado!\n");
             free(novo->nome); free(novo->email); free(novo);
             return;
         }
@@ -94,7 +94,7 @@ void cadastrar_cliente(Cliente **lista) {
     novo->prox = *lista; // Inserção no início
     *lista = novo;
 
-    printf("Cliente cadastrado com sucesso!n");
+    printf("Cliente cadastrado com sucesso!\n");
 }
 
 

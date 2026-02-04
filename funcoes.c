@@ -72,13 +72,25 @@ void gerenciar_clientes(Cliente **lista_c) {//pq reomver e cadastrar precisa alt
         limpar_buffer();
 
         switch(op) {
-            case 1: cadastrar_cliente(lista_c); break;//mantem duplo
-            case 2: listar_clientes(*lista_c); break;//so precisa de um ponteiro, n vai adicionar nem remover
-            case 3: buscar_cliente(*lista_c); break;
-            case 4: editar_cliente(*lista_c); break;
-            case 5: remover_cliente(lista_c); break;
-            case 0: break;
-            default: printf("Opcao invalida.\n");
+            case 1: 
+                cadastrar_cliente(lista_c); 
+                break;//mantem duplo
+            case 2: 
+                listar_clientes(*lista_c); 
+                break;//so precisa de um ponteiro, n vai adicionar nem remover
+            case 3: 
+                buscar_cliente(*lista_c); 
+                break;
+            case 4: 
+                editar_cliente(*lista_c); 
+                break;
+            case 5: 
+                remover_cliente(lista_c); 
+                break;
+            case 0: 
+                break;
+            default: 
+                printf("Opcao invalida.\n");
         }
         if(op != 0) 
         pause_system();//espera o enter
@@ -100,13 +112,25 @@ void gerenciar_produtos(Produto **lista_p) {
         limpar_buffer();
 
         switch(op) {
-            case 1: cadastrar_produto(lista_p); break; //ponteiro duplo
-            case 2: listar_produtos(*lista_p); break; //ponteiro simples
-            case 3: buscar_produto(*lista_p); break; //apenas a busca
-            case 4: editar_produto(*lista_p); break; //edição de produto e um ponteiro simples 
-            case 5: remover_produto(lista_p); break; // aqui passa um duplo tambem
-            case 0: break;
-            default: printf("Opcao invalida.\n");
+            case 1: 
+                cadastrar_produto(lista_p); 
+                break; //ponteiro duplo
+            case 2: 
+                listar_produtos(*lista_p); 
+                break; //ponteiro simples
+            case 3: 
+                buscar_produto(*lista_p); 
+                break; //apenas a busca
+            case 4: 
+                editar_produto(*lista_p); 
+                break; //edição de produto e um ponteiro simples 
+            case 5: 
+                remover_produto(lista_p); 
+                break; // aqui passa um duplo tambem
+            case 0: 
+                break;
+            default: 
+                printf("Opcao invalida.\n");
         }
         if(op != 0) pause_system();
     } while(op != 0);
@@ -143,11 +167,19 @@ void modo_compra(Cliente **lista_c, Produto **lista_p) {
         limpar_buffer();
 
         switch(op) {
-            case 1: adicionar_ao_carrinho(atual, *lista_p); break;// aqui vai passar o cliente atual e a lista de produtos, *lista_p 
-            case 2: listar_carrinho(atual); break;
-            case 3: remover_do_carrinho(atual); break;
-            case 0: break;
-            default: printf("Opcao invalida.\n");
+            case 1: 
+                adicionar_ao_carrinho(atual, *lista_p); 
+                break;// aqui vai passar o cliente atual e a lista de produtos, *lista_p 
+            case 2: 
+                listar_carrinho(atual); 
+                break;
+            case 3: 
+                remover_do_carrinho(atual); 
+                break;
+            case 0: 
+                break;
+            default: 
+                printf("Opcao invalida.\n");
         }
         if(op != 0) pause_system();
     } while(op != 0);
@@ -314,7 +346,8 @@ void cadastrar_produto(Produto **lista) {
     novo->nome = (char*) malloc(100 * sizeof(char));
 
     printf("Codigo (unico): ");
-    scanf("%d", &novo->codigo); limpar_buffer();
+    scanf("%d", &novo->codigo); 
+    limpar_buffer();
     //o codigo vai verifica a lista e se ja esxite cadastro
     Produto *aux = *lista;
     while(aux != NULL) {
@@ -329,11 +362,13 @@ void cadastrar_produto(Produto **lista) {
 
     // se o produto e unico, ele chega aqui e pede o resto
     printf("Nome do Produto: ");
-    scanf("%[^\n]", novo->nome); limpar_buffer();
+    scanf("%[^\n]", novo->nome); 
+    limpar_buffer();
     printf("Preco: ");
     scanf("%f", &novo->preco);
     printf("Quantidade em Estoque: ");
-    scanf("%d", &novo->quantidade); limpar_buffer();
+    scanf("%d", &novo->quantidade); 
+    limpar_buffer();
 
     //aqui se codigo for novo, ele colooca o produto na primeira posição da lista pra ser o primeiro.
     novo->prox = *lista;
@@ -344,7 +379,10 @@ void cadastrar_produto(Produto **lista) {
 void listar_produtos(Produto *lista) {
 
     // verifica se a lista estiver vazia, se tiver ele sai 
-    if(!lista) { printf("Nenhum produto cadastrado.\n"); return; }
+    if(!lista) { 
+        printf("Nenhum produto cadastrado.\n"); 
+        return; 
+    }
     //osinal '-'alinha o texto pra ficar bonitinho
     printf("\n%-6s | %-20s | %-10s | %-5s\n", "Cod", "Nome", "Preco", "Qtd");
 
@@ -352,7 +390,6 @@ void listar_produtos(Produto *lista) {
 
     //quando tiver o produto na lista ele mostra e avança
     while(lista != NULL) {
-
         printf("%-6d | %-20s | R$%-8.2f | %-5d\n",
             lista->codigo, lista->nome, lista->preco, lista->quantidade);
         lista = lista->prox;
@@ -371,7 +408,6 @@ void buscar_produto(Produto *lista) {
     while(lista != NULL) {
 
         if(lista->codigo == cod) {
-
             printf("\nProduto: %s\nPreco: %.2f\nEstoque: %d\n",
                 lista->nome, lista->preco, lista->quantidade);
             return;
@@ -392,9 +428,14 @@ void editar_produto(Produto *lista) {
         if(lista->codigo == cod) {
             printf("Editando %s...\n", lista->nome);
             // atualiza os dados menos o codigo pq ele e unico
-            printf("Novo Nome: "); scanf("%[^\n]", lista->nome); limpar_buffer();
-            printf("Novo Preco: "); scanf("%f", &lista->preco);
-            printf("Nova Quantidade: "); scanf("%d", &lista->quantidade); limpar_buffer();
+            printf("Novo Nome: "); 
+            scanf("%[^\n]", lista->nome); 
+            limpar_buffer();
+            printf("Novo Preco: "); 
+            scanf("%f", &lista->preco);
+            printf("Nova Quantidade: "); 
+            scanf("%d", &lista->quantidade); 
+            limpar_buffer();
             printf("Produto atualizado!\n");
             return;
         }
@@ -406,7 +447,8 @@ void editar_produto(Produto *lista) {
 void remover_produto(Produto **lista) {
     int cod;
     printf("Digite o codigo para remover: ");
-    scanf("%d", &cod); limpar_buffer();
+    scanf("%d", &cod); 
+    limpar_buffer();
     // o'ant' guarda no anterior para  refazer a ligação
     // ja o 'atual' percorre a lista procurando o produto
     Produto *ant = NULL;
@@ -422,9 +464,12 @@ void remover_produto(Produto **lista) {
         return;
     }
     // aqui ele exclui o produto e pula pro proximo
-    if(ant == NULL) *lista = atual->prox;
+    if(ant == NULL) {
+        *lista = atual->prox;
     //e nesse ele pula o intem que sera excluido
-    else ant->prox = atual->prox;
+    }else {
+        ant->prox = atual->prox;
+    }
 
     // Como foi usado o malloc para o nome e struct, precisa dar o free nos dois pra fazer a limpeza 
     free(atual->nome);
@@ -468,7 +513,10 @@ void adicionar_ao_carrinho(Cliente *cliente, Produto *lista_prod) {
 
 void listar_carrinho(Cliente *cliente) {
     ItemCarrinho *item = cliente->carrinho;
-    if(!item) { printf("Carrinho vazio.\n"); return; }
+    if(!item) { 
+        printf("Carrinho vazio.\n"); 
+        return; 
+    }
 
     float total = 0;
     int qtd_itens = 0;
@@ -522,9 +570,11 @@ void remover_do_carrinho(Cliente *cliente) {
         return;
     }
 
-    if(ant == NULL) cliente->carrinho = atual->prox;
-    else ant->prox = atual->prox; 
-
+    if(ant == NULL){ 
+        cliente->carrinho = atual->prox;
+    }else {
+         ant->prox = atual->prox; 
+    }
     // O produto continua existindo na loja, só não está mais no carrinho, caso contrario poderia apagar da loja inteira.
     free(atual);
     printf("Item removido do carrinho.\n");

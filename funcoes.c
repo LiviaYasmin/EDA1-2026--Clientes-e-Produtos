@@ -113,7 +113,7 @@ void listar_clientes(Cliente *lista) {
     printf("----------------------------------------------------------\n");
     while(lista != NULL) {
         printf("%-15s | %-20s | %-20s\n", lista->cpf, lista->nome, lista->email);
-   
+         lista = lista->prox;
     }
 }
 

@@ -209,7 +209,7 @@ void adicionar_ao_carrinho(Cliente *cliente, Produto *lista_prod) {
     //apontamos para o produto original pra economizar nA memória e manter os dados no eixo
     novo_item->produto = p;
     novo_item->quantidade_compra = qtd;
-    novo_item->prox = NULL;
+    novo_item->prox = cliente->carrinho;
     cliente->carrinho = novo_item;
 
     printf("Item adicionado ao carrinho!\n");

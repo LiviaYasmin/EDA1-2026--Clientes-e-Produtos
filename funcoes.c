@@ -142,6 +142,74 @@ void buscar_cliente(Cliente *lista) {
     printf("Cliente nao encontrado.\n");
 }
 
+void editar_cliente(Cliente *lista) {
+    char cpf[15];
+    printf("Digite o CPF do cliente para editar: ");
+    scanf("%[^\n]", cpf); 
+    limpar_buffer();
+
+    while(lista != NULL) {
+        if(strcmp(lista->cpf, cpf) == 0) {
+            printf("Editando %s...\n", lista->nome);
+            printf("Novo Nome: "); scanf("%[^\n]", lista->nome); 
+            limpar_buffer();
+            printf("Novo Email: "); scanf("%[^\n]", lista->email); 
+            limpar_buffer();
+            printf("Novo Telefone: "); scanf("%[^\n]", lista->telefone); 
+            limpar_buffer();
+            printf("Nova Data Nasc: "); scanf("%[^\n]", lista->data_nasc); 
+            limpar_buffer();
+            printf("Dados atualizados!\n");
+            return;
+        }
+        lista = lista->prox;
+    }
+    printf("Cliente nao encontrado.\n");
+}
+
+void remover_cliente(Cliente **lista) {
+    char cpf[15];
+    printf("Digite o CPF para remover: ");
+    scanf("%[^\n]", cpf); 
+    limpar_buffer();
+
+    //Saber quem tava antes do cliente pra juntar de novo depois de remover
+    Cliente *anterior = NULL; //n tem ngm antes do primeiro
+    Cliente *atual = *lista; //comeca no inicio da lista
+
+    while(atual != NULL && strcmp(atual->cpf, cpf) != 0) {//ver a lista
+        anterior = atual;
+        atual = atual->prox;
+        //anterior-->atual que vira anterior-->proximo que vira atual
+    }
+
+    if(atual == NULL) { //n achou o cpf
+        printf("Cliente nao encontrado.\n");
+        return;
+    }
+
+  
+    if(anterior == NULL) { //o cpf ta na primeira posicao
+        *lista = atual->prox; //remove pulando o primeiro e aponta ja pro segundo
+    } else {
+        anterior->prox = atual->prox;//quando o meio sai, 1 e 3 tem que se juntar
+    }
+
+    
+    ItemCarrinho *c = atual->carrinho;//limpa o carrinho primeiro pro cliente n ser deletado e o carrinho ocupar memoria sem dono
+    while(c != NULL) {
+        ItemCarrinho *tempC = c;
+        c = c->prox;//segura o proximo
+        free(tempC);//deleta o atual
+    }
+
+    free(atual->nome);//libera da memoria
+    free(atual->email);
+    free(atual);//libera a estrutura do cliente atual
+    printf("Cliente removido com sucesso.\n");
+}
+
+
 
 
 //FUNÇÕES Do PRODUTO

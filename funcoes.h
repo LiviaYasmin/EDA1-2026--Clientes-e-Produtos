@@ -24,15 +24,9 @@ void buscar_produto(Produto *lista);
 void editar_produto(Produto *lista);
 void remover_produto(Produto **lista);
 
-<<<<<<< features_produto_carrinho
 //funcao do carrinho
 void adicionar_ao_carrinho(Cliente *cliente, Produto *lista_prod);
 
-=======
-
-void limpar_buffer();
-void pause_system();
->>>>>>> main
 #endif
 
 

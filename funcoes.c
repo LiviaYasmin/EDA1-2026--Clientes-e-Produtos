@@ -238,8 +238,6 @@ void remover_cliente(Cliente **lista) {
 }
 
 
-
-
 //FUNÇÕES Do PRODUTO
 //reserva um espaco na memória usando o malloc para guardar o produto e o nome
 void cadastrar_produto(Produto **lista) {
@@ -363,6 +361,73 @@ void remover_produto(Produto **lista) {
     free(atual->nome);
     free(atual);
     printf("Produto removido.\n");
+}
+
+
+//FUNÇÕES Do Carrinho
+void adicionar_ao_carrinho(Cliente *cliente, Produto *lista_prod) {
+    int cod, qtd;
+    printf("Digite o codigo do produto: ");
+    scanf("%d", &cod);
+
+    //vai buscar o produto na lista geral
+    Produto *p = lista_prod;
+    while(p != NULL && p->codigo != cod) {
+        p = p->prox;
+    }
+
+    if(p == NULL) {
+        printf("Produto nao existe!\n"); // mostra se não existir
+        return;
+    }
+
+    printf("Produto encontrado: %s (R$ %.2f)\n", p->nome, p->preco);
+    printf("Quantidade desejada: ");
+    scanf("%d", &qtd);
+    limpar_buffer();
+
+    //aqui aloca a estrutura do itemcarrinho, que e diferente do produto
+    ItemCarrinho *novo_item = (ItemCarrinho*) malloc(sizeof(ItemCarrinho));
+    //apontamos para o produto original pra economizar nA memória e manter os dados no eixo
+    novo_item->produto = p;
+    novo_item->quantidade_compra = qtd;
+    novo_item->prox = cliente->carrinho;
+    cliente->carrinho = novo_item;
+
+    printf("Item adicionado ao carrinho!\n");
+}
+
+void listar_carrinho(Cliente *cliente) {
+    ItemCarrinho *item = cliente->carrinho;
+    if(!item) { printf("Carrinho vazio.\n"); return; }
+
+    float total = 0;
+    int qtd_itens = 0;
+
+    printf("\n--- Carrinho de Compras ---\n");
+    printf("%-20s | %-5s | %-10s | %-10s\n", "Produto", "Qtd", "Unit", "Subtotal");
+    printf("--------------------------------------------------------\n");
+
+    while(item != NULL) {
+        // olha se o ponteiro para o produto ainda é valido
+        if(item->produto != NULL) {
+            // Acessa os dados seguindo o ponteiro, item,produto e preco
+            float subtotal = item->produto->preco * item->quantidade_compra;
+            
+            printf("%-20s | %-5d | R$%-8.2f | R$%-8.2f\n", 
+                   item->produto->nome, 
+                   item->quantidade_compra, 
+                   item->produto->preco, 
+                   subtotal);
+            
+            total += subtotal;
+            qtd_itens++;
+        }
+        item = item->prox;
+    }
+    printf("--------------------------------------------------------\n");
+    printf("ITENS DIFERENTES: %d\n", qtd_itens);
+    printf("VALOR TOTAL: R$ %.2f\n", total);
 }
 
 //Pra compilar só, colocar as funcoes de verdade aqui depois

@@ -56,6 +56,39 @@ int menu_principal() {
     return op;
 }
 
+//FUNÇÕES Do PRODUTO
+//reserva um espaco na memória usando o malloc para guardar o produto e o nome
+void cadastrar_produto(Produto **lista) {
+    Produto *novo = (Produto*) malloc(sizeof(Produto));
+    novo->nome = (char*) malloc(100 * sizeof(char));
+
+    printf("Codigo (unico): ");
+    scanf("%d", &novo->codigo); limpar_buffer();
+    //o codigo vai verifica a lista e se ja esxite cadastro
+    Produto *aux = *lista;
+    while(aux != NULL) {
+    // se ja existir ele "joga fora" e libera a memória pra não ter dois ao mesmo tempo
+        if(aux->codigo == novo->codigo) {
+            printf("Erro: Codigo ja existe!\n");
+            free(novo->nome); free(novo);
+            return;
+        }
+        aux = aux->prox;
+    }
+
+    // se o produto e unico, ele chega aqui e pede o resto
+    printf("Nome do Produto: ");
+    scanf("%[^\n]", novo->nome); limpar_buffer();
+    printf("Preco: ");
+    scanf("%f", &novo->preco);
+    printf("Quantidade em Estoque: ");
+    scanf("%d", &novo->quantidade); limpar_buffer();
+
+    //aqui se codigo for novo, ele colooca o produto na primeira posição da lista pra ser o primeiro.
+    novo->prox = *lista;
+    *lista = novo;
+    printf("Produto cadastrado!\n");
+}
 
 //Pra compilar só, colocar as funcoes de verdade aqui depois
 void gerenciar_clientes(Cliente **lista) {

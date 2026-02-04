@@ -173,34 +173,39 @@ void remover_cliente(Cliente **lista) {
     scanf("%[^\n]", cpf); 
     limpar_buffer();
 
-    Cliente *ant = NULL;
-    Cliente *atual = *lista;
+    //Saber quem tava antes do cliente pra juntar de novo depois de remover
+    Cliente *anterior = NULL; //n tem ngm antes do primeiro
+    Cliente *atual = *lista; //comeca no inicio da lista
 
-    while(atual != NULL && strcmp(atual->cpf, cpf) != 0) {
-        ant = atual;
+    while(atual != NULL && strcmp(atual->cpf, cpf) != 0) {//ver a lista
+        anterior = atual;
         atual = atual->prox;
+        //anterior-->atual que vira anterior-->proximo que vira atual
     }
 
-    if(atual == NULL) {
+    if(atual == NULL) { //n achou o cpf
         printf("Cliente nao encontrado.\n");
         return;
     }
 
-    if(ant == NULL) {
-        *lista = atual->prox;
+  
+    if(anterior == NULL) { //o cpf ta na primeira posicao
+        *lista = atual->prox; //remove pulando o primeiro e aponta ja pro segundo
     } else {
-        ant->prox = atual->prox;
+        anterior->prox = atual->prox;//quando o meio sai, 1 e 3 tem que se juntar
     }
 
-    free(atual->nome);
- 
-    ItemCarrinho *c = atual->carrinho;
+    
+    ItemCarrinho *c = atual->carrinho;//limpa o carrinho primeiro pro cliente n ser deletado e o carrinho ocupar memoria sem dono
     while(c != NULL) {
         ItemCarrinho *tempC = c;
-        c = c->prox;
-        free(tempC);
+        c = c->prox;//segura o proximo
+        free(tempC);//deleta o atual
     }
 
+    free(atual->nome);//libera da memoria
+    free(atual->email);
+    free(atual);//libera a estrutura do cliente atual
     printf("Cliente removido com sucesso.\n");
 }
 

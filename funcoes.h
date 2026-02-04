@@ -26,7 +26,10 @@ void remover_produto(Produto **lista);
 
 //funcao do carrinho
 void adicionar_ao_carrinho(Cliente *cliente, Produto *lista_prod);
+void listar_carrinho(Cliente *cliente);
 
+void limpar_buffer();
+void pause_system();
 #endif
 
 

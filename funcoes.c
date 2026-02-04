@@ -143,7 +143,7 @@ void modo_compra(Cliente **lista_c, Produto **lista_p) {
         limpar_buffer();
 
         switch(op) {
-            case 1: adicionar_ao_carrinho(&atual, *lista_p); break;// aqui vai passar o cliente atual e a lista de produtos, *lista_p 
+            case 1: adicionar_ao_carrinho(atual, *lista_p); break;// aqui vai passar o cliente atual e a lista de produtos, *lista_p 
             case 2: listar_carrinho(atual); break;
             case 3: remover_do_carrinho(atual); break;
             case 0: break;

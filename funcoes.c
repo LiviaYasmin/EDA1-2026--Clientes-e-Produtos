@@ -56,6 +56,33 @@ int menu_principal() {
     return op;
 }
 
+void gerenciar_clientes(Cliente **lista_c) {//pq reomver e cadastrar precisa alterar o inicio da lista
+    int op;
+    do {
+        printf("\n--- GESTAO DE CLIENTES ---\n");
+        printf("1. Cadastrar Cliente\n");
+        printf("2. Listar Clientes\n");
+        printf("3. Buscar Cliente (CPF)\n");
+        printf("4. Editar Cliente\n");
+        printf("5. Remover Cliente\n");
+        printf("0. Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", op);
+        limpar_buffer();
+
+        switch(op) {
+            case 1: cadastrar_cliente(lista_c); break;//mantem duplo
+            case 2: listar_clientes(*lista_c); break;//so precisa de um ponteiro, n vai adicionar nem remover
+            case 3: buscar_cliente(*lista_c); break;
+            case 4: editar_cliente(*lista_c); break;
+            case 5: remover_cliente(lista_c); break;
+            case 0: break;
+            default: printf("Opcao invalida.\n");
+        }
+        if(op != 0) 
+        pause_system();//espera o enter
+    } while(op != 0);
+}
 
 /* ===================================================================
    FUNÇÕES DE CLIENTE

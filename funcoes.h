@@ -21,6 +21,9 @@ void cadastrar_produto(Produto **lista);
 void listar_produtos(Produto *lista);
 void buscar_produto(Produto *lista);
 
+//funcao do carrinho
+void adicionar_ao_carrinho(Cliente *cliente, Produto *lista_prod);
+
 #endif
 
 

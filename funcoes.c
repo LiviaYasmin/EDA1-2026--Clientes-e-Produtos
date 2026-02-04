@@ -181,6 +181,41 @@ void remover_produto(Produto **lista) {
     printf("Produto removido.\n");
 }
 
+
+//FUNÇÕES Do Carrinho
+void adicionar_ao_carrinho(Cliente *cliente, Produto *lista_prod) {
+    int cod, qtd;
+    printf("Digite o codigo do produto: ");
+    scanf("%d", &cod);
+
+    //vai buscar o produto na lista geral
+    Produto *p = lista_prod;
+    while(p != NULL && p->codigo != cod) {
+        p = p->prox;
+    }
+
+    if(p == NULL) {
+        printf("Produto nao existe!\n"); // mostra se não existir
+        return;
+    }
+
+    printf("Produto encontrado: %s (R$ %.2f)\n", p->nome, p->preco);
+    printf("Quantidade desejada: ");
+    scanf("%d", &qtd);
+    limpar_buffer();
+
+    //aqui aloca a estrutura do itemcarrinho, que e diferente do produto
+    ItemCarrinho *novo_item = (ItemCarrinho*) malloc(sizeof(ItemCarrinho));
+    //apontamos para o produto original pra economizar nA memória e manter os dados no eixo
+    novo_item->produto = p;
+    novo_item->quantidade_compra = qtd;
+    novo_item->prox = NULL;
+    cliente->carrinho = novo_item;
+
+    printf("Item adicionado ao carrinho!\n");
+}
+
+
 //Pra compilar só, colocar as funcoes de verdade aqui depois
 void gerenciar_clientes(Cliente **lista) {
     printf("\nGerenciamento de Clientes em desenvolvimento...\n");

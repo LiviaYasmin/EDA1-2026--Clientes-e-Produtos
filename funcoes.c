@@ -56,6 +56,51 @@ int menu_principal() {
     return op;
 }
 
+
+/* ===================================================================
+   FUNÇÕES DE CLIENTE
+   =================================================================== */
+void cadastrar_cliente(Cliente **lista) {
+    Cliente *novo = (Cliente*) malloc(sizeof(Cliente));
+    if (!novo) { printf("Erro de memoria!n"); return; }
+
+    novo->nome = (char*) malloc(100 * sizeof(char));
+    novo->email = (char*) malloc(100 * sizeof(char));
+
+    printf("CPF: ");
+    scanf("%[^\n]", novo->cpf); limpar_buffer();
+    
+    /* Verifica se CPF ja existe */
+    Cliente *aux = *lista;
+    while(aux != NULL) {
+        if(strcmp(aux->cpf, novo->cpf) == 0) {
+            printf("Erro: CPF ja cadastrado!\n");
+            free(novo->nome); free(novo->email); free(novo);
+            return;
+        }
+        aux = aux->prox;
+    }
+
+    printf("Nome: ");
+    scanf("%[^\n]", novo->nome); limpar_buffer();
+    printf("Email: ");
+    scanf("%[^\n]", novo->email); limpar_buffer();
+    printf("Telefone: ");
+    scanf("%[^\n]", novo->telefone); limpar_buffer();
+    printf("Data Nasc (DD/MM/AAAA): ");
+    scanf("%[^\n]", novo->data_nasc); limpar_buffer();
+
+    novo->carrinho = NULL;
+    novo->prox = *lista; // Inserção no início
+    *lista = novo;
+
+    printf("Cliente cadastrado com sucesso!\n");
+}
+
+
+
+
+
 //FUNÇÕES Do PRODUTO
 //reserva um espaco na memória usando o malloc para guardar o produto e o nome
 void cadastrar_produto(Produto **lista) {

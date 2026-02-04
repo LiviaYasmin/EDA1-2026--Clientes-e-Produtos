@@ -530,20 +530,31 @@ void remover_do_carrinho(Cliente *cliente) {
     printf("Item removido do carrinho.\n");
 }
 
-//Pra compilar só, colocar as funcoes de verdade aqui depois
 
-void gerenciar_produtos(Produto **lista) {
-    printf("\nGerenciamento de Produtos em desenvolvimento...\n");
-    pause_system();
-}
+void liberar_memoria(Cliente *lista_c, Produto *lista_p) {//roda quando o programa fecha
+    while(lista_c != NULL) {
+        Cliente *tempC = lista_c;//manter o cliente atual que vai ser removida
+        lista_c = lista_c->prox;//endereco do proximo, sem o anterior n da pra saber pra onde apontou
+        
+        ItemCarrinho *ic = tempC->carrinho;//inicio da lista
+        while(ic != NULL) {
+            ItemCarrinho *tempIC = ic;//mantem o atual
+            ic = ic->prox;//salva o proximo
+            free(tempIC);//destroi o atual
+        }
 
-void modo_compra(Cliente **c, Produto **p) {
-    printf("\nModo Compra / Carrinho em desenvolvimento...\n");
-    pause_system();
-}
+        free(tempC->nome);//carrinho some ai pode apagar nome e email do cliente
+        free(tempC->email);
+        free(tempC);//some com estrutura cliente
+    }
 
-void liberar_memoria(Cliente *c, Produto *p) {
-    printf("\nLimpando ponteiros e encerrando o sistema...\n");
+
+    while(lista_p != NULL) {
+        Produto *tempP = lista_p;
+        lista_p = lista_p->prox;
+        free(tempP->nome);
+        free(tempP);//some com a estrutura produto
+    }
 }
 
 //Limpa o lixo do teclado para não pular os próximos scanfs

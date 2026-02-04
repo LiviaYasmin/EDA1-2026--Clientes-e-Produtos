@@ -112,6 +112,48 @@ void gerenciar_produtos(Produto **lista_p) {
     } while(op != 0);
 }
 
+void modo_compra(Cliente **lista_c, Produto **lista_p) {
+    char cpf[15];
+    printf("\n--- MODO COMPRA ---\n");
+    printf("Digite o CPF do cliente para acessar o carrinho: ");
+    scanf("%[^\n]", cpf);
+    limpar_buffer();
+    //ponteiro auxiliar que começa no primeiro cliente da lista
+    Cliente *atual = *lista_c;
+    while(atual != NULL && strcmp(atual->cpf, cpf) != 0) {
+        atual = atual->prox;
+    }
+    // ee saiu do loop e for null, chegou ao fim sem encontrar nada
+    if (atual == NULL) {
+        printf("Cliente nao encontrado!\n");
+        pause_system();
+        return;
+    }
+
+    int op;
+    do {
+        // quando estiver tudo certo sera redirecionado para o menu
+        printf("\n--- CARRINHO DE: %s ---\n", atual->nome);
+        printf("1. Incluir Produto no Carrinho\n");
+        printf("2. Listar Carrinho (Ver Totais)\n");
+        printf("3. Retirar Produto do Carrinho\n");
+        printf("0. Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &op);
+        limpar_buffer();
+
+        switch(op) {
+            case 1: adicionar_ao_carrinho(atual, *lista_p); break;// aqui vai passar o cliente atual e a lista de produtos, *lista_p 
+            case 2: listar_carrinho(atual); break;
+            case 3: remover_do_carrinho(atual); break;
+            case 0: break;
+            default: printf("Opcao invalida.\n");
+        }
+        if(op != 0) pause_system();
+    } while(op != 0);
+}
+
+
 /* ===================================================================
    FUNÇÕES DE CLIENTE
    =================================================================== */

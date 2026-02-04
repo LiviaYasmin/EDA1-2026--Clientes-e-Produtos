@@ -167,6 +167,45 @@ void editar_cliente(Cliente *lista) {
     printf("Cliente nao encontrado.\n");
 }
 
+void remover_cliente(Cliente **lista) {
+    char cpf[15];
+    printf("Digite o CPF para remover: ");
+    scanf("%[^\n]", cpf); 
+    limpar_buffer();
+
+    Cliente *ant = NULL;
+    Cliente *atual = *lista;
+
+    while(atual != NULL && strcmp(atual->cpf, cpf) != 0) {
+        ant = atual;
+        atual = atual->prox;
+    }
+
+    if(atual == NULL) {
+        printf("Cliente nao encontrado.\n");
+        return;
+    }
+
+    if(ant == NULL) {
+        *lista = atual->prox;
+    } else {
+        ant->prox = atual->prox;
+    }
+
+    free(atual->nome);
+ 
+    ItemCarrinho *c = atual->carrinho;
+    while(c != NULL) {
+        ItemCarrinho *tempC = c;
+        c = c->prox;
+        free(tempC);
+    }
+
+    printf("Cliente removido com sucesso.\n");
+}
+
+
+
 
 //FUNÇÕES Do PRODUTO
 //reserva um espaco na memória usando o malloc para guardar o produto e o nome

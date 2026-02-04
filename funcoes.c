@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "funcoes.h"
 
@@ -274,10 +275,6 @@ void cadastrar_produto(Produto **lista) {
 }
 
 //Pra compilar só, colocar as funcoes de verdade aqui depois
-void gerenciar_clientes(Cliente **lista) {
-    printf("\nGerenciamento de Clientes em desenvolvimento...\n");
-    pause_system();
-}
 
 void gerenciar_produtos(Produto **lista) {
     printf("\nGerenciamento de Produtos em desenvolvimento...\n");

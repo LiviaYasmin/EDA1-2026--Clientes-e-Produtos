@@ -142,6 +142,30 @@ void buscar_cliente(Cliente *lista) {
     printf("Cliente nao encontrado.\n");
 }
 
+void editar_cliente(Cliente *lista) {
+    char cpf[15];
+    printf("Digite o CPF do cliente para editar: ");
+    scanf("%[^\n]", cpf); 
+    limpar_buffer();
+
+    while(lista != NULL) {
+        if(strcmp(lista->cpf, cpf) == 0) {
+            printf("Editando %s...\n", lista->nome);
+            printf("Novo Nome: "); scanf("%[^\n]", lista->nome); 
+            limpar_buffer();
+            printf("Novo Email: "); scanf("%[^\n]", lista->email); 
+            limpar_buffer();
+            printf("Novo Telefone: "); scanf("%[^\n]", lista->telefone); 
+            limpar_buffer();
+            printf("Nova Data Nasc: "); scanf("%[^\n]", lista->data_nasc); 
+            limpar_buffer();
+            printf("Dados atualizados!\n");
+            return;
+        }
+        lista = lista->prox;
+    }
+    printf("Cliente nao encontrado.\n");
+}
 
 
 //FUNÇÕES Do PRODUTO

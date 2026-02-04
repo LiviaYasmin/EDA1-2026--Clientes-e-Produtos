@@ -85,6 +85,33 @@ void gerenciar_clientes(Cliente **lista_c) {//pq reomver e cadastrar precisa alt
     } while(op != 0);
 }
 
+void gerenciar_produtos(Produto **lista_p) {
+    int op;
+    do {
+        printf("\n--- GESTAO DE PRODUTOS ---\n");
+        printf("1. Cadastrar Produto\n");
+        printf("2. Listar Produtos\n");
+        printf("3. Buscar Produto (Codigo)\n");
+        printf("4. Editar Produto\n");
+        printf("5. Remover Produto\n");
+        printf("0. Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &op);
+        limpar_buffer();
+
+        switch(op) {
+            case 1: cadastrar_produto(lista_p); break; //ponteiro duplo
+            case 2: listar_produtos(*lista_p); break; //ponteiro simples
+            case 3: buscar_produto(*lista_p); break; //apenas a busca
+            case 4: editar_produto(*lista_p); break; //edição de produto e um ponteiro simples 
+            case 5: remover_produto(lista_p); break; // aqui passa um duplo tambem
+            case 0: break;
+            default: printf("Opcao invalida.\n");
+        }
+        if(op != 0) pause_system();
+    } while(op != 0);
+}
+
 /* ===================================================================
    FUNÇÕES DE CLIENTE
    =================================================================== */

@@ -274,6 +274,48 @@ void cadastrar_produto(Produto **lista) {
     printf("Produto cadastrado!\n");
 }
 
+void listar_produtos(Produto *lista) {
+
+    // verifica se a lista estiver vazia, se tiver ele sai 
+    if(!lista) { printf("Nenhum produto cadastrado.\n"); return; }
+    //osinal '-'alinha o texto pra ficar bonitinho
+    printf("\n%-6s | %-20s | %-10s | %-5s\n", "Cod", "Nome", "Preco", "Qtd");
+
+    printf("----------------------------------------------------\n");
+
+    //quando tiver o produto na lista ele mostra e avança
+    while(lista != NULL) {
+
+        printf("%-6d | %-20s | R$%-8.2f | %-5d\n",
+            lista->codigo, lista->nome, lista->preco, lista->quantidade);
+        lista = lista->prox;
+
+    }
+
+}
+
+void buscar_produto(Produto *lista) {
+    
+    //vai olhar a lista item por item, e verifica se está tudo certo 
+    int cod;
+    printf("Digite o codigo: ");
+    scanf("%d", &cod); limpar_buffer();
+
+    while(lista != NULL) {
+
+        if(lista->codigo == cod) {
+
+            printf("\nProduto: %s\nPreco: %.2f\nEstoque: %d\n",
+                lista->nome, lista->preco, lista->quantidade);
+            return;
+        }
+        //se não for o item, ele pula e vai pro outro
+        lista = lista->prox;
+    }
+
+    printf("Produto nao encontrado.\n");
+}
+
 //Pra compilar só, colocar as funcoes de verdade aqui depois
 
 void gerenciar_produtos(Produto **lista) {

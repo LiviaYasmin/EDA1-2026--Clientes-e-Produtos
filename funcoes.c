@@ -60,35 +60,45 @@ int menu_principal() {
 /* ===================================================================
    FUNÇÕES DE CLIENTE
    =================================================================== */
-void cadastrar_cliente(Cliente **lista) {
-    Cliente *novo = (Cliente*) malloc(sizeof(Cliente));
-    if (!novo) { printf("Erro de memoria!n"); return; }
+void cadastrar_cliente(Cliente **lista) { //alterar a lista na main e n na cópia
+    Cliente *novo = (Cliente*) malloc(sizeof(Cliente)); //endre;co de memoria vazio dado pelo malloc do tamanho de Cliente que tem o nome de novo
+    if (!novo) { 
+        printf("Erro de memoria!n"); 
+        return; 
+    }
 
-    novo->nome = (char*) malloc(100 * sizeof(char));
+    novo->nome = (char*) malloc(100 * sizeof(char)); //o espaço vai recer nome e email que digitou
     novo->email = (char*) malloc(100 * sizeof(char));
 
     printf("CPF: ");
-    scanf("%[^\n]", novo->cpf); limpar_buffer();
+    scanf("%[^\n]", novo->cpf); 
+    limpar_buffer();
     
-    /* Verifica se CPF ja existe */
+
     Cliente *aux = *lista;
-    while(aux != NULL) {
+    while(aux != NULL) { //ve se CPF ja existe
         if(strcmp(aux->cpf, novo->cpf) == 0) {
             printf("Erro: CPF ja cadastrado!\n");
-            free(novo->nome); free(novo->email); free(novo);
+            free(novo->nome); 
+            free(novo->email); 
+            free(novo);
             return;
         }
-        aux = aux->prox;
+        aux = aux->prox; //ve a lista inteira pra ver se ja tem o cpf
     }
 
     printf("Nome: ");
-    scanf("%[^\n]", novo->nome); limpar_buffer();
+    scanf("%[^\n]", novo->nome); 
+    limpar_buffer();
     printf("Email: ");
-    scanf("%[^\n]", novo->email); limpar_buffer();
+    scanf("%[^\n]", novo->email); 
+    limpar_buffer();
     printf("Telefone: ");
-    scanf("%[^\n]", novo->telefone); limpar_buffer();
+    scanf("%[^\n]", novo->telefone); 
+    limpar_buffer();
     printf("Data Nasc (DD/MM/AAAA): ");
-    scanf("%[^\n]", novo->data_nasc); limpar_buffer();
+    scanf("%[^\n]", novo->data_nasc); 
+    limpar_buffer();
 
     novo->carrinho = NULL;
     novo->prox = *lista; // Inserção no início
@@ -97,6 +107,15 @@ void cadastrar_cliente(Cliente **lista) {
     printf("Cliente cadastrado com sucesso!\n");
 }
 
+void listar_clientes(Cliente *lista) {
+    if(!lista) { printf("Nenhum cliente cadastrado.\n"); return; }
+    printf("\n%-15s | %-20s | %-20s\n", "CPF", "Nome", "Email");
+    printf("----------------------------------------------------------\n");
+    while(lista != NULL) {
+        printf("%-15s | %-20s | %-20s\n", lista->cpf, lista->nome, lista->email);
+         lista = lista->prox;
+    }
+}
 
 
 

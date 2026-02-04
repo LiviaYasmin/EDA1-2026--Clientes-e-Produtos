@@ -430,6 +430,37 @@ void listar_carrinho(Cliente *cliente) {
     printf("VALOR TOTAL: R$ %.2f\n", total);
 }
 
+void remover_do_carrinho(Cliente *cliente) {
+    int cod;
+    printf("Digite o codigo do produto para retirar do carrinho: ");
+    scanf("%d", &cod); limpar_buffer();
+
+    ItemCarrinho *ant = NULL;
+    ItemCarrinho *atual = cliente->carrinho;
+
+    // olha a lista do carrinho procurando o produto pelo código
+    while(atual != NULL) {
+        //verifica o atual->produto antes de acessar "codigo" para evitar erros
+        if(atual->produto != NULL && atual->produto->codigo == cod) {
+            break;
+        }
+        ant = atual;
+        atual = atual->prox;
+    }
+
+    if(atual == NULL) {
+        printf("Item nao encontrado no carrinho.\n");
+        return;
+    }
+
+    if(ant == NULL) cliente->carrinho = atual->prox;
+    else ant->prox = atual->prox; 
+
+    // O produto continua existindo na loja, só não está mais no carrinho, caso contrario poderia apagar da loja inteira.
+    free(atual);
+    printf("Item removido do carrinho.\n");
+}
+
 //Pra compilar só, colocar as funcoes de verdade aqui depois
 
 void gerenciar_produtos(Produto **lista) {

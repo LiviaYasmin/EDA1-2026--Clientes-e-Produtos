@@ -132,6 +132,55 @@ void buscar_produto(Produto *lista) {
     printf("Produto nao encontrado.\n");
 }
 
+void editar_produto(Produto *lista) {
+    int cod;
+    printf("Digite o codigo do produto para editar: ");
+    scanf("%d", &cod); limpar_buffer();
+
+    while(lista != NULL) {
+        if(lista->codigo == cod) {
+            printf("Editando %s...\n", lista->nome);
+            // atualiza os dados menos o codigo pq ele e unico
+            printf("Novo Nome: "); scanf("%[^\n]", lista->nome); limpar_buffer();
+            printf("Novo Preco: "); scanf("%f", &lista->preco);
+            printf("Nova Quantidade: "); scanf("%d", &lista->quantidade); limpar_buffer();
+            printf("Produto atualizado!\n");
+            return;
+        }
+        lista = lista->prox;
+    }
+    printf("Produto nao encontrado.\n");
+}
+
+void remover_produto(Produto **lista) {
+    int cod;
+    printf("Digite o codigo para remover: ");
+    scanf("%d", &cod); limpar_buffer();
+    // o'ant' guarda no anterior para  refazer a ligação
+    // ja o 'atual' percorre a lista procurando o produto
+    Produto *ant = NULL;
+    Produto *atual = *lista;
+    // enquanto não acabar a lista e não achar o codigo, vai salvar e pular
+    while(atual != NULL && atual->codigo != cod) {
+        ant = atual;
+        atual = atual->prox;
+    }
+    // se no final da "atual" for NULL, não achou nada
+    if(atual == NULL) {
+        printf("Produto nao encontrado.\n");
+        return;
+    }
+    // aqui ele exclui o produto e pula pro proximo
+    if(ant == NULL) *lista = atual->prox;
+    //e nesse ele pula o intem que sera excluido
+    else ant->prox = atual->prox;
+
+    // Como foi usado o malloc para o nome e struct, precisa dar o free nos dois pra fazer a limpeza 
+    free(atual->nome);
+    free(atual);
+    printf("Produto removido.\n");
+}
+
 //Pra compilar só, colocar as funcoes de verdade aqui depois
 void gerenciar_clientes(Cliente **lista) {
     printf("\nGerenciamento de Clientes em desenvolvimento...\n");

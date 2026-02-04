@@ -71,24 +71,25 @@ void cadastrar_cliente(Cliente **lista) { //alterar a lista na main e n na cópi
     novo->email = (char*) malloc(100 * sizeof(char));
 
     printf("CPF: ");
-    scanf("%[^\n]", novo->cpf); 
+    scanf("%[^\n]", novo->cpf); //salva oq foi digitado dentro do campo cpf do cleinte novo 
     limpar_buffer();
     
 
-    Cliente *aux = *lista;
-    while(aux != NULL) { //ve se CPF ja existe
-        if(strcmp(aux->cpf, novo->cpf) == 0) {
-            printf("Erro: CPF ja cadastrado!\n");
-            free(novo->nome); 
+    Cliente *aux = *lista;//ve se CPF ja existe e comeca no inicio da lista
+    while(aux != NULL) { 
+        if(strcmp(aux->cpf, novo->cpf) == 0) { //compara o cpf da lista com oq digitou
+            printf("Erro: CPF ja cadastrado!\n"); //0 é que o cpf ja existe
+            free(novo->nome); //se tem devolve a memoria reservada
             free(novo->email); 
             free(novo);
             return;
         }
-        aux = aux->prox; //ve a lista inteira pra ver se ja tem o cpf
+        aux = aux->prox; //ve o resto da lista inteira pra ver se ja tem o cpf
     }
 
+    //o cpf é novo:
     printf("Nome: ");
-    scanf("%[^\n]", novo->nome); 
+    scanf("%[^\n]", novo->nome); //le e reserva
     limpar_buffer();
     printf("Email: ");
     scanf("%[^\n]", novo->email); 
@@ -100,23 +101,46 @@ void cadastrar_cliente(Cliente **lista) { //alterar a lista na main e n na cópi
     scanf("%[^\n]", novo->data_nasc); 
     limpar_buffer();
 
-    novo->carrinho = NULL;
-    novo->prox = *lista; // Inserção no início
-    *lista = novo;
+    novo->carrinho = NULL; //cliente novo tem carrinho vazio
+    novo->prox = *lista; // novo cliente aponta pro incio da lista atual
+    *lista = novo;//o cliente novo vai ser o inicio da lista
 
     printf("Cliente cadastrado com sucesso!\n");
 }
 
 void listar_clientes(Cliente *lista) {
-    if(!lista) { printf("Nenhum cliente cadastrado.\n"); return; }
+    if(lista == NULL) { //lista vazia
+        printf("Nenhum cliente cadastrado.\n"); 
+        return; 
+    }
+
+    //separar memoria e alinhar a esquerda
+    //-->planilha
     printf("\n%-15s | %-20s | %-20s\n", "CPF", "Nome", "Email");
     printf("----------------------------------------------------------\n");
+    
     while(lista != NULL) {
-        printf("%-15s | %-20s | %-20s\n", lista->cpf, lista->nome, lista->email);
-         lista = lista->prox;
+        printf("%-15s | %-20s | %-20s\n", lista->cpf, lista->nome, lista->email);//mostra o cliente
+         lista = lista->prox; //vai pro proximo cliente
     }
 }
 
+void buscar_cliente(Cliente *lista) {
+    char cpf[15]; //le o cpf que vai ser digitado
+    printf("Digite o CPF: ");
+    scanf("%[^\n]", cpf); 
+    limpar_buffer();
+
+    while(lista != NULL) {
+        if(strcmp(lista->cpf, cpf) == 0) { //compara o cpf atual com oq ta procurando
+            printf("\nEncontrado:\nNome: %s\nEmail: %s\nTelefone: %s\nNascimento: %s\n", 
+                   lista->nome, lista->email, lista->telefone, lista->data_nasc);
+            return;
+        }
+        lista = lista->prox; //se n achar continua a ver a lista
+    }
+    printf("Cliente nao encontrado.\n");
+}
 
 
 
@@ -174,13 +198,13 @@ void liberar_memoria(Cliente *c, Produto *p) {
     printf("\nLimpando ponteiros e encerrando o sistema...\n");
 }
 
-// Limpa o lixo do teclado para não pular os próximos scanfs
+//Limpa o lixo do teclado para não pular os próximos scanfs
 void limpar_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-// Faz o programa esperar o usuário antes de limpar a tela
+//Remove o enter pra n pular a proxima leitura
 void pause_system() {
     printf("\nPressione ENTER para continuar...");
     limpar_buffer();

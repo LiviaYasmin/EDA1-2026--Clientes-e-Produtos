@@ -67,7 +67,7 @@ void gerenciar_clientes(Cliente **lista_c) {//pq reomver e cadastrar precisa alt
         printf("5. Remover Cliente\n");
         printf("0. Voltar\n");
         printf("Escolha: ");
-        scanf("%d", op);
+        scanf("%d", &op);
         limpar_buffer();
 
         switch(op) {

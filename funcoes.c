@@ -542,7 +542,7 @@ void listar_carrinho(Cliente *cliente) {
     printf(" .----------------------------------------------------------.\n");
     printf(" |                   CARRINHO DE COMPRAS                    |\n");
     printf(" |----------------------------------------------------------|\n");
-    printf(" |  %-20s | %-5s | %-10s | %-10s\n", "Produto", "Qtd", "Unit", "Subtotal");
+    printf(" |  %-20s | %-5s | %-10s | %-10s\n", "Produto", "Qtd", "Preco", "Subtotal");
     printf(" |----------------------------------------------------------|\n");
 
     while(item != NULL) {

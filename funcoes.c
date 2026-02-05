@@ -616,6 +616,5 @@ void limpar_buffer() {
 //Remove o enter pra n pular a proxima leitura
 void pause_system() {
     printf("\nPressione ENTER para continuar...");
-    limpar_buffer();
     getchar();
 }
